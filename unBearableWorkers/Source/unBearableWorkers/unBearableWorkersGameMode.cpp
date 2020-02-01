@@ -3,6 +3,8 @@
 #include "unBearableWorkersGameMode.h"
 #include "unBearableWorkersCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Engine/World.h"
+#include "Engine/GameViewportClient.h"
 
 AunBearableWorkersGameMode::AunBearableWorkersGameMode()
 {
@@ -13,3 +15,22 @@ AunBearableWorkersGameMode::AunBearableWorkersGameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 }
+
+// Called when the game starts or when spawned
+void AunBearableWorkersGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	//GetWorld()->GetGameViewport()->MaxSplitscreenPlayers = maxScreens;
+	//GetWorld()->GetGameViewport()->SplitscreenInfo = ;
+	//->GetGameViewport().UpdateActiveSplitscreenType();
+//GetWorld()->GetGameViewportClient().MaxSplitscreenPlayers = 4;
+	//GetWorld()->GetGameViewport()->UpdateActiveSplitscreenType();
+
+	//Context->GetWorld()->GetGameViewport().MaxSplitscreenPlayers = 4;
+
+}
+
+
+
+

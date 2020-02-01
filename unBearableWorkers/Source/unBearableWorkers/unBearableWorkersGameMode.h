@@ -13,6 +13,14 @@ class AunBearableWorkersGameMode : public AGameModeBase
 
 public:
 	AunBearableWorkersGameMode();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay", meta = (AllowPrivateAccess = "true"))
+		int maxScreens = 2;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 };
 
 
