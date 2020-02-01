@@ -54,8 +54,12 @@ void AunBearableWorkersCharacter::SetupPlayerInputComponent(class UInputComponen
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
+
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+
+
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AunBearableWorkersCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AunBearableWorkersCharacter::MoveRight);
@@ -63,11 +67,18 @@ void AunBearableWorkersCharacter::SetupPlayerInputComponent(class UInputComponen
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &AunBearableWorkersCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &AunBearableWorkersCharacter::LookUpAtRate);
-
+	if (thirdPersonView)
+	{
+		PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+		PlayerInputComponent->BindAxis("TurnRate", this, &AunBearableWorkersCharacter::TurnAtRate);
+		PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+		PlayerInputComponent->BindAxis("LookUpRate", this, &AunBearableWorkersCharacter::LookUpAtRate);
+	}
+	else
+	{
+		PlayerInputComponent->BindAxis("MoveForward", this, &AunBearableWorkersCharacter::MoveForward);
+		PlayerInputComponent->BindAxis("MoveRight", this, &AunBearableWorkersCharacter::MoveRight);
+	}
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AunBearableWorkersCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AunBearableWorkersCharacter::TouchStopped);
@@ -111,9 +122,17 @@ void AunBearableWorkersCharacter::MoveForward(float Value)
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
+		FVector Direction;
 		// get forward vector
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		if(thirdPersonView)
+		{
+			Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		}
+		else
+		{
+			Direction = FVector(1,0,0);
+		}
+		
 		AddMovementInput(Direction, Value);
 	}
 }
@@ -125,9 +144,17 @@ void AunBearableWorkersCharacter::MoveRight(float Value)
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
+		FVector Direction;
 		// get right vector 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		if (thirdPersonView)
+		{
+			Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		}
+		else
+		{
+			Direction = FVector(0, 1, 0);
+		}
+
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}

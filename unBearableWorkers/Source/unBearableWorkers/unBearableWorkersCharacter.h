@@ -21,6 +21,9 @@ class AunBearableWorkersCharacter : public ACharacter
 public:
 	AunBearableWorkersCharacter();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
+		bool thirdPersonView = false;
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;
