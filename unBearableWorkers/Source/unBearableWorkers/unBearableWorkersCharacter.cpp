@@ -55,9 +55,10 @@ void AunBearableWorkersCharacter::SetupPlayerInputComponent(class UInputComponen
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 
+	/*
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-
+	*/
 
 
 

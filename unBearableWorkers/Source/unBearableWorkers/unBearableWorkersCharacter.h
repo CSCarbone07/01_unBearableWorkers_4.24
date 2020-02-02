@@ -21,7 +21,7 @@ class AunBearableWorkersCharacter : public ACharacter
 public:
 	AunBearableWorkersCharacter();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera) //meta = (AllowPrivateAccess = "true"))
 		bool thirdPersonView = false;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
